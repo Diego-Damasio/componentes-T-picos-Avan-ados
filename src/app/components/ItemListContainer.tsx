@@ -1,11 +1,12 @@
-// src/app/page.tsx
+// src/components/ItemListContainer.tsx
 'use client';
-import React, { useState } from 'react';
-import ItemList from './components/ItemList';
-import ItemDetail from './components/ItemDetail';
-import { Item } from './types';
 
-const Page: React.FC = () => {
+import React, { useState } from 'react';
+import ItemList from './ItemList';
+import ItemDetail from './ItemDetail';
+import { Item } from '../types';
+
+const ItemListContainer: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<Item | null>(null);
 
   const items: Item[] = [
@@ -21,11 +22,10 @@ const Page: React.FC = () => {
 
   return (
     <div>
-      <h1>Lista de Frutas</h1>
       <ItemList items={items} onItemSelect={handleItemSelect} />
       <ItemDetail selectedItem={selectedItem} />
     </div>
   );
 };
 
-export default Page;
+export default ItemListContainer;
