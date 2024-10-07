@@ -1,51 +1,42 @@
-// src/components/ItemDetail.tsx
-'use client';
+// src/app/components/ItemDetail.tsx
+//'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Item } from '../types';
 
 interface ItemDetailProps {
-  selectedItem: Item | null;
+    selectedItem: Item | null;
 }
 
 const ItemDetail: React.FC<ItemDetailProps> = ({ selectedItem }) => {
-  useEffect(() => {
-    if (selectedItem) {
-      console.log(`Item selecionado: ${selectedItem.name}`);
-    }
-    return () => {
-      if (selectedItem) {
-        console.log(`Item deselecionado: ${selectedItem.name}`);
-      }
+    // Função para renderizar o status usando switch
+    const renderStatus = (status: Item['status']) => {
+        switch (status) {
+            case 'available':
+                return <span style={{ color: 'green' }}>Disponível</span>;
+            case 'unavailable':
+                return <span style={{ color: 'red' }}>Indisponível</span>;
+            default:
+                return <span>Desconhecido</span>;
+        }
     };
-  }, [selectedItem]);
 
-  if (!selectedItem) {
-    return <p>Nenhum item selecionado.</p>;
-  }
-
-  let statusMessage: string;
-
-  switch (selectedItem.status) {
-    case 'available':
-      statusMessage = 'Disponível';
-      break;
-    case 'unavailable':
-      statusMessage = 'Indisponível';
-      break;
-    default:
-      statusMessage = 'Desconhecido';
-  }
-
-  return (
-    <div>
-      <h2>Detalhes do Item</h2>
-      <p>ID: {selectedItem.id}</p>
-      <p>Nome: {selectedItem.name}</p>
-      <p>Descrição: {selectedItem.description}</p>
-      <p>Status: {statusMessage}</p>
-    </div>
-  );
+    return (
+        <div>
+            <h2>Detalhes do Item</h2>
+            {selectedItem ? (
+                <div>
+                    <p><strong>ID:</strong> {selectedItem.id}</p>
+                    <p><strong>Nome:</strong> {selectedItem.name}</p>
+                    <p><strong>Descrição:</strong> {selectedItem.description}</p>
+                    <p><strong>Status:</strong> {renderStatus(selectedItem.status)}</p>
+                </div>
+            ) : (
+                // Diretiva if usando operador ternário
+                <p>Nenhum item selecionado.</p>
+            )}
+        </div>
+    );
 };
 
 export default ItemDetail;
